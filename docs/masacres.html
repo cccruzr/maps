@@ -2,13 +2,13 @@
 <html lang="es-ES">
 
 <head>
-	<meta charset="utf-8" />
+	<meta charset="UTF-8">
     <title>Cartografía del Conflicto: Masacres</title>
     <!-- ____________ CSS Styles __________ -->
     <!-- Leaflet Style Sheet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css">
     <!-- jQuery UI -->
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css">
     <!-- Personal styling -->
     <link href="../css/main.css" rel="stylesheet"> 
 </head>
@@ -158,23 +158,30 @@
 	            },
 
 	            filter: function (feature, layer) {
-	                	return (feature.properties.ANIO >= rangeStart &&feature.properties.ANIO <= rangeEnd);
+	            	if (feature.properties.ANIO >= rangeStart && feature.properties.ANIO <= rangeEnd){
+						count += 1;
+						//console.log(count);
+					};
+	            	return (feature.properties.ANIO >= rangeStart && feature.properties.ANIO <= rangeEnd);
 	            },
 	        });
 	         //Omnivore CSV import and addition to map
-	        omnivore.csv('../data/Masacres_Data.csv', null, masacresLayer);
+	        omnivore.csv('../data/Masacres_DATA.csv', null, masacresLayer);
 	        overlay = L.layerGroup([masacresLayer]).addTo(map);
 	    }
 
         var rangeStart = 1994, //Global time range variables
-        	rangeEnd = 1999;
+        	rangeEnd = 1999,
+        	count = 0;
 
 		$( function() {
 		    $( "#slider-range" ).slider({
 		    	change: function(){
 		    		rangeStart = $( "#slider-range" ).slider( "values", 0 );
 		    		rangeEnd = $( "#slider-range" ).slider( "values", 1 );
+		    		//count = 0;
 		    		filterLayer();
+		    		console.log(count);
 		    	},
 		    	range: true,
 				min: 1981,
