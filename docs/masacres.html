@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+
+<head>
+	<meta charset="utf-8" />
+    <title>Cartografía del Conflicto: Masacres</title>
+    <!-- ____________ CSS Styles __________ -->
+    <!-- Leaflet Style Sheet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css">
+    <!-- jQuery UI -->
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css">
+    <!-- Personal styling -->
+    <link href="../css/main.css" rel="stylesheet"> 
+</head>
+
+<body>
+	<!-- ##############################################  -->
+    <!-- ###########    WEBPAGE ELEMENTS    ###########  -->
+    <!-- ##############################################  -->
+	<h2>Cartografía del Conflicto: Masacres perpetuadas por grupos armados (1981-2013)</h2>
+	<!-- Map container -->
+     <div id="map"></div>
+	
+	<!-- Time slider -->
+	<p>
+		<label for="amount">&nbsp;Rango de años:</label>
+		<input type="text" id="amount" readonly>
+	</p>
+	<div id="slider-range"></div>
+
+	<!-- ##############################################  -->
+    <!-- ###########       JAVASCRIPT       ###########  -->
+    <!-- ##############################################  -->
+	<!-- ___________ LOADING OF REQUIRED LIBRARIES ___________  -->
+    <!-- Leaflet library -->
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+    <!-- jQuery + UI -->
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.min.js"></script>
+    <!-- Leaflet Omnivore -->
+	<script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.3.1/leaflet-omnivore.min.js'></script>
+    <!-- ___________ END OF LIBRARIES LOADING ___________  -->
+
+    <script type="text/javascript">
+        //Carto tiles attribution and URL
+        var cartoLight_URL = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
+        	RUTASLink = '<a href="http://rutasdelconflicto.com/geografia-del-terror/">Rutas del Conflicto</a>',
+        	OSMLink = '<a href="http://openstreetmap.org">&copy;OpenStreetMap</a>',
+        	cartoLink = '<a href="http://cartodb.com/attributions">&copy;CartoDB</a>',
+        	cartoAttrib = RUTASLink + ' | ' + OSMLink + ' | ' + cartoLink;
+
+        var cartoMap = L.tileLayer(cartoLight_URL, {
+            attribution: cartoAttrib,
+            maxZoom: 19
+        });
+
+        //Map creation centered in Bogota
+        var bounds = new L.latLngBounds(  	//Map boundaries
+        	L.latLng(17, -95),     			//UpperLeft 
+        	L.latLng(-8, -54)    			//BottomRight
+        );
+
+        var map = L.map('map', {
+            layers: [cartoMap], //Initial Group Layer
+            maxBounds: bounds,
+            maxBoundsViscosity: 0.8,
+        }).setView([4.7110, -74.0721], 6);
+
+        // Create Leaflet Control Object for Legend
+		var legend = L.control({position: 'bottomleft'});
+
+		// Function that runs when legend is added to map
+		legend.onAdd = function(map) {
+			// Create Div Element and populate it with HTML
+			var div = L.DomUtil.create('div', 'legend');		    
+			div.innerHTML += '<p style="font-size: 1.2em; text-decoration: underline"><b>GRUPO ARMADO</b></p><br>';
+			div.innerHTML += '<i style="background: #79C36A"></i><p>PARAMILITARES</p>';
+			div.innerHTML += '<i style="background: #F1595F"></i><p>GUERRILLA</p>';
+			div.innerHTML += '<i style="background: #9E66AB"></i><p>BACRIM</p>';
+			div.innerHTML += '<i style="background: #599AD3"></i><p>FUERZA PÚBLICA</p>';
+			div.innerHTML += '<i style="background: #727272"></i><p>NO IDENTIFICADO</p>';
+			// Return the Legend div containing the HTML content
+			return div;
+		};
+		// Add Legend to Map
+		legend.addTo(map);
+
+        var overlay = null; //Global overlay variable
+
+        function filterLayer() {
+        	if (overlay != null) {overlay.clearLayers()};
+        	var masacresLayer = L.geoJson(null, {
+	            onEachFeature: function(feature, layer){
+						date = new Date('"' + feature.properties.FECHA + '"');
+						month = date.getMonth() + 1;
+						dateFormat = date.getFullYear() + "-" + month + "-" + date.getDate();
+						feature.properties.FECHA_YYMMDD = dateFormat;
+
+						layer.bindPopup(
+							'<h2>' + feature.properties.NOMBRE_MASACRE + '</h2>' +
+							'<strong>FECHA: </strong>' + feature.properties.FECHA_YYMMDD + '<br/>' +
+							'<strong>MUNICIPIO: </strong>' + feature.properties.MUNICIPIO + '<br/>' +
+							'<strong>DEPARTAMENTO: </strong>' + feature.properties.DEPARTAMENTO + '<br/>' +
+							'<strong>GRUPO ARMADO: </strong>' + feature.properties.GRUPO_ARMADO + '<br/>' +
+							'<strong>TIPO GRUPO: </strong>' + feature.properties.TIPO_GRUPO + '<br/>' +
+							'<div class="link"><a target="_blank" href="' +  feature.properties.URL + '">VER MÁS</a><div>'
+						);
+				},
+
+	            pointToLayer: function(feature, latlng) { //Style the layer based on TIPO_GRUPO
+	                if (feature.properties.TIPO_GRUPO == "PARAMILITARES"){
+	                    return new L.CircleMarker(latlng, {
+	                        time: feature.properties.FECHA_YYMMDD,
+	                        radius: 4,
+	                        color: "#79C36A",
+	                        fillOpacity: 0.75,
+	                        weight: 1
+	                    });    
+	                };
+	                if (feature.properties.TIPO_GRUPO == "GUERRILLA"){
+	                    return new L.CircleMarker(latlng, {
+	                        radius: 4,
+	                        color: "#F1595F",
+	                        fillOpacity: 0.75,
+	                        weight: 1
+	                    });    
+	                };
+	                if (feature.properties.TIPO_GRUPO == "NO_IDENTIFICADO"){
+	                    return new L.CircleMarker(latlng, {
+	                        radius: 4,
+	                        color: "#727272",
+	                        fillOpacity: 0.75,
+	                        weight: 1
+	                    });    
+	                };
+	                if (feature.properties.TIPO_GRUPO == "BACRIM"){
+	                    return new L.CircleMarker(latlng, {
+	                        radius: 4,
+	                        color: "#9E66AB",
+	                        fillOpacity: 0.75,
+	                        weight: 1
+	                    });    
+	                };
+					if (feature.properties.TIPO_GRUPO == "FUERZA_PUBLICA"){
+	                    return new L.CircleMarker(latlng, {
+	                        radius: 4,
+	                        color: "#599AD3",
+	                        fillOpacity: 0.75,
+	                        weight: 1
+	                    });    
+	                };
+	            },
+
+	            filter: function (feature, layer) {
+	                	return (feature.properties.ANIO >= rangeStart &&feature.properties.ANIO <= rangeEnd);
+	            },
+	        });
+	         //Omnivore CSV import and addition to map
+	        omnivore.csv('../data/Masacres_Data.csv', null, masacresLayer);
+	        overlay = L.layerGroup([masacresLayer]).addTo(map);
+	    }
+
+        var rangeStart = 1994, //Global time range variables
+        	rangeEnd = 1999;
+
+		$( function() {
+		    $( "#slider-range" ).slider({
+		    	change: function(){
+		    		rangeStart = $( "#slider-range" ).slider( "values", 0 );
+		    		rangeEnd = $( "#slider-range" ).slider( "values", 1 );
+		    		filterLayer();
+		    	},
+		    	range: true,
+				min: 1981,
+				max: 2013,
+				values: [ 1994, 1999 ],
+				slide: function( event, ui ) {
+					$( "#amount" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+				}
+		    });
+
+		    $( "#amount" ).val( $( "#slider-range" ).slider( "values", 0 ) +
+		      " - " + $( "#slider-range" ).slider( "values", 1 ) );
+		 });
+
+		// Initial loading
+		filterLayer(rangeStart, rangeEnd);
+    </script>
+</body>
+</html>

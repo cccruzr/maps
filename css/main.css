@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Karla');
+html, body{
+	height: 100%;
+	font-family: 'Karla', Helvetica, sans-serif;
+}
+
+#map{
+	height: 60%;
+	width: 70%;
+	font-family: 'Open Sans', Helvetica, sans-serif;
+
+}
+
+#slider-range{
+	width: calc(70% - 20px);
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+#amount {
+	font-family: 'Karla', Helvetica, sans-serif;
+	border:0; 
+	color:#f6931f; 
+	font-weight:bold;
+	font-size: 1.05em;
+	width: 100px;
+}
+
+/* LEAFLET OVERRIDDEN STYLES */
+.leaflet-popup-content {
+	font-family: 'Open Sans', Helvetica, sans-serif;
+	font-size: 1em;
+}
+
+.leaflet-container .leaflet-control-attribution {
+	background: rgba(0, 0, 0, 0.3);
+	color: #EEF0F1;
+}
+
+.leaflet-control-attribution a {
+	color: #EEF0F1;
+}
+
+.leaflet-control-attribution a:hover {
+	color: #2a9fd6;
+}
+
+.link {
+	text-align: right;
+}
+
+.legend {
+	line-height: 15px;
+	width: 130px;
+	color: #333333;
+	padding: 6px 8px;
+	background: white;
+	background: rgba(255,255,255,0.8);
+	box-shadow: 0 0 15px rgba(0,0,0,0.2);
+	border-radius: 5px;
+}
+
+.legend i {
+	width: 10px;
+	height: 10px;
+	float: left;
+	margin-right: 5px;
+	opacity: 0.75;
+	border-radius: 5px;
+	line-height: 15px;
+}
+
+.legend p {
+	font-size: 1em;
+	margin: 0;
+}
