@@ -53,7 +53,8 @@
         	RUTASLink = '<a href="http://rutasdelconflicto.com/geografia-del-terror/">Rutas del Conflicto</a>',
         	OSMLink = '<a href="http://openstreetmap.org">&copy;OpenStreetMap</a>',
         	cartoLink = '<a href="http://cartodb.com/attributions">&copy;CartoDB</a>',
-        	cartoAttrib = RUTASLink + ' | ' + OSMLink + ' | ' + cartoLink;
+        	myLink = '<a href="http://cccruzr.github.io">Camilo Cruz</a>'
+        	cartoAttrib = myLink + ' | ' + RUTASLink + ' | ' + OSMLink + ' | ' + cartoLink;
 
         var cartoMap = L.tileLayer(cartoLight_URL, {
             attribution: cartoAttrib,
@@ -196,7 +197,7 @@
 		 });
 
 		// Initial loading
-		filterLayer(rangeStart, rangeEnd);
+		filterLayer();
     </script>
 </body>
 </html>
