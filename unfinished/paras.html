@@ -10,14 +10,7 @@
     <!-- jQuery UI -->
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css">
     <!-- Personal styling -->
-    <link href="../css/main.css" rel="stylesheet">
-    <style>
-    	.leaflet-interactive:hover {
-			stroke-width: 20;
-			stroke-opacity: 1;
-			opacity: 1;    		
-		}
-    </style> 
+    <link href="../css/main.css" rel="stylesheet"> 
 </head>
 
 <body>
@@ -30,7 +23,7 @@
 	
 	<!-- Time slider -->
 	<p>
-		<label for="amount">&nbsp;<b>Rango de años:</b></label>
+		<label for="amount">&nbsp;Rango de años:</label>
 		<input type="text" id="amount" readonly>
 	</p>
 	<div id="slider-range"></div>
@@ -52,15 +45,12 @@
 		crossorigin="anonymous"></script>
     <!-- Leaflet Omnivore -->
 	<script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.3.1/leaflet-omnivore.min.js'></script>
-	<!-- D3 -->
-	<script src="https://d3js.org/d3.v4.js" charset="utf-8"></script>
     <!-- ___________ END OF LIBRARIES LOADING ___________  -->
 
     <script type="text/javascript">
         //Carto tiles attribution and URL
-        var cartoLight_URL = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png';
-        //var	cartoLight_URL = 'https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiY2NjcnV6ciIsImEiOiJjajN3NTh6ZTUwMDE4MzJwODl6OW04a2poIn0.LUFTG4do1t5B5BKBsYC2UQ';
-        var	RUTASLink = '<a href="http://rutasdelconflicto.com/geografia-del-terror/">Rutas del Conflicto</a>',
+        var cartoLight_URL = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
+        	RUTASLink = '<a href="http://rutasdelconflicto.com/geografia-del-terror/">Rutas del Conflicto</a>',
         	OSMLink = '<a href="http://openstreetmap.org">&copy;OpenStreetMap</a>',
         	cartoLink = '<a href="http://cartodb.com/attributions">&copy;CartoDB</a>',
         	myLink = '<a href="http://cccruzr.github.io">Camilo Cruz</a>'
@@ -92,11 +82,11 @@
 			// Create Div Element and populate it with HTML
 			var div = L.DomUtil.create('div', 'legend');		    
 			div.innerHTML += '<p style="font-size: 1.2em; text-decoration: underline"><b>GRUPO ARMADO</b></p><br>';
-			div.innerHTML += '<i style="background: #d62728"></i><p>PARAMILITARES</p>';
-			div.innerHTML += '<i style="background: #2ca02c"></i><p>GUERRILLA</p>';
-			div.innerHTML += '<i style="background: #9467bd"></i><p>BACRIM</p>';
-			div.innerHTML += '<i style="background: #17becf"></i><p>FUERZA PÚBLICA</p>';
-			div.innerHTML += '<i style="background: #bcbd22"></i><p>NO IDENTIFICADO</p>';
+			div.innerHTML += '<i style="background: #79C36A"></i><p>PARAMILITARES</p>';
+			div.innerHTML += '<i style="background: #F1595F"></i><p>GUERRILLA</p>';
+			div.innerHTML += '<i style="background: #9E66AB"></i><p>BACRIM</p>';
+			div.innerHTML += '<i style="background: #599AD3"></i><p>FUERZA PÚBLICA</p>';
+			div.innerHTML += '<i style="background: #727272"></i><p>NO IDENTIFICADO</p>';
 			// Return the Legend div containing the HTML content
 			return div;
 		};
@@ -106,9 +96,9 @@
         var overlay = null; //Global overlay variable
 
         function filterLayer() {
-        	if (overlay != null) {overlay.clearLayers()};
+        	//if (overlay != null) {overlay.clearLayers()};
         	var masacresLayer = L.geoJson(null, {
-	            onEachFeature: function(feature, layer){
+	            /*onEachFeature: function(feature, layer){
 						date = new Date('"' + feature.properties.FECHA + '"');
 						month = date.getMonth() + 1;
 						dateFormat = date.getFullYear() + "-" + month + "-" + date.getDate();
@@ -123,67 +113,66 @@
 							'<strong>TIPO GRUPO: </strong>' + feature.properties.TIPO_GRUPO + '<br/>' +
 							'<div class="link"><a target="_blank" href="' +  feature.properties.URL + '">VER MÁS</a><div>'
 						);
-				},
+				},*/
 
-	            pointToLayer: function(feature, latlng) { //Style the layer based on TIPO_GRUPO
-	                if (feature.properties.TIPO_GRUPO == "PARAMILITARES"){
+	            pointToLayer: function(feature, geoJsonPoint, latlng) { //Style the layer based on TIPO_GRUPO
+	                return L.marker(latlng);
+	                /*if (feature.properties.TIPO_GRUPO == "PARAMILITARES"){
 	                    return new L.CircleMarker(latlng, {
 	                        time: feature.properties.FECHA_YYMMDD,
-	                        radius: 5,
-	                        color: "#d62728",
-	                        opacity: 0.5,
-	                        fillOpacity: 0.5,
-	                        weight: 0.25
+	                        radius: 4,
+	                        color: "#79C36A",
+	                        fillOpacity: 0.75,
+	                        weight: 1
 	                    });    
 	                };
 	                if (feature.properties.TIPO_GRUPO == "GUERRILLA"){
 	                    return new L.CircleMarker(latlng, {
-	                        radius: 5,
-	                        color: "#2ca02c",
-	                        opacity: 0.5,
-	                        fillOpacity: 0.5,
-	                        weight: 0.25
+	                        radius: 4,
+	                        color: "#F1595F",
+	                        fillOpacity: 0.75,
+	                        weight: 1
 	                    });    
 	                };
 	                if (feature.properties.TIPO_GRUPO == "NO_IDENTIFICADO"){
 	                    return new L.CircleMarker(latlng, {
-	                        radius: 5,
-	                        color: "#bcbd22",
-	                        opacity: 0.5,
-	                        fillOpacity: 0.5,
-	                        weight: 0.25
+	                        radius: 4,
+	                        color: "#727272",
+	                        fillOpacity: 0.75,
+	                        weight: 1
 	                    });    
 	                };
 	                if (feature.properties.TIPO_GRUPO == "BACRIM"){
 	                    return new L.CircleMarker(latlng, {
-	                        radius: 5,
-	                        color: "#9467bd",
-	                        opacity: 0.5,
-	                        fillOpacity: 0.5,
-	                        weight: 0.25
+	                        radius: 4,
+	                        color: "#9E66AB",
+	                        fillOpacity: 0.75,
+	                        weight: 1
 	                    });    
 	                };
 					if (feature.properties.TIPO_GRUPO == "FUERZA_PUBLICA"){
 	                    return new L.CircleMarker(latlng, {
-	                        radius: 5,
-	                        color: "#17becf",
-	                        opacity: 0.5,
-	                        fillOpacity: 0.5,
-	                        weight: 0.25
+	                        radius: 4,
+	                        color: "#599AD3",
+	                        fillOpacity: 0.75,
+	                        weight: 1
 	                    });    
-	                };
+	                };*/
 	            },
 
-	            filter: function (feature, layer) {
+	            /*filter: function (feature, layer) {
 	            	if (feature.properties.ANIO >= rangeStart && feature.properties.ANIO <= rangeEnd){
 						count += 1;
 						//console.log(count);
 					};
 	            	return (feature.properties.ANIO >= rangeStart && feature.properties.ANIO <= rangeEnd);
-	            },
+	            },*/
 	        });
 	         //Omnivore CSV import and addition to map
-	        omnivore.csv('../data/Masacres_Data.csv', null, masacresLayer);
+	         omnivore.csv('../data/Paras_Limpio_Amp.csv',{delimiter: "%"}, masacresLayer)
+				.on('error', function(error) {
+					console.log(error);
+				});
 	        overlay = L.layerGroup([masacresLayer]).addTo(map);
 	    }
 
@@ -210,16 +199,6 @@
 		    $( "#amount" ).val( $( "#slider-range" ).slider( "values", 0 ) +
 		      " - " + $( "#slider-range" ).slider( "values", 1 ) );
 		 });
-
-		$( document ).ajaxComplete( function() {
-			console.log( "Triggered ajaxComplete handler." );
-			d3.selectAll(".leaflet-interactive")
-					.on("mouseover", function(){
-						console.log
-						d3.select(this).transition()
-							.style("stroke-width", 10);
-					});
-		});
 
 		// Initial loading
 		filterLayer();
