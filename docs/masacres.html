@@ -123,54 +123,81 @@
 							'<strong>TIPO GRUPO: </strong>' + feature.properties.TIPO_GRUPO + '<br/>' +
 							'<div class="link"><a target="_blank" href="' +  feature.properties.URL + '">VER MÁS</a><div>'
 						);
+
+
 				},
 
 	            pointToLayer: function(feature, latlng) { //Style the layer based on TIPO_GRUPO
-	                if (feature.properties.TIPO_GRUPO == "PARAMILITARES"){
-	                    return new L.CircleMarker(latlng, {
-	                        time: feature.properties.FECHA_YYMMDD,
+		            var tooltip = d3.select("body")
+						.append("div")
+						.attr("class", "tooltip")
+						.style("border-radius", "1px")
+						.style("padding", "2px")
+						.style("background-color", "rgba(255, 255, 255, 0.75)")
+						.style("position", "absolute")
+						.style("font-family", "'Open Sans', sans-serif")
+						.style("font-size", "10px")
+						.style("z-index", "10000")
+						.style("visibility", "hidden");
+
+		            if (feature.properties.TIPO_GRUPO == "PARAMILITARES"){
+	                	circle = new L.CircleMarker(latlng, {
 	                        radius: 5,
 	                        color: "#d62728",
 	                        opacity: 0.5,
 	                        fillOpacity: 0.5,
-	                        weight: 0.25
-	                    });    
+	                        weight: 0.25,
+	                    });
+	                    addTooltip(circle, feature, tooltip);
+	                    return circle;  
 	                };
 	                if (feature.properties.TIPO_GRUPO == "GUERRILLA"){
-	                    return new L.CircleMarker(latlng, {
+	                    circle = new L.CircleMarker(latlng, {
 	                        radius: 5,
 	                        color: "#2ca02c",
 	                        opacity: 0.5,
 	                        fillOpacity: 0.5,
-	                        weight: 0.25
-	                    });    
+	                        weight: 0.25,
+	                        municipio: feature.properties.MUNICIPIO
+	                    });
+	                    addTooltip(circle, feature, tooltip);
+	                    return circle;    
 	                };
 	                if (feature.properties.TIPO_GRUPO == "NO_IDENTIFICADO"){
-	                    return new L.CircleMarker(latlng, {
+	                    circle = new L.CircleMarker(latlng, {
 	                        radius: 5,
 	                        color: "#bcbd22",
 	                        opacity: 0.5,
 	                        fillOpacity: 0.5,
-	                        weight: 0.25
-	                    });    
+	                        weight: 0.25,
+	                        municipio: feature.properties.MUNICIPIO
+	                    });
+	                    addTooltip(circle, feature, tooltip);
+	                    return circle;     
 	                };
 	                if (feature.properties.TIPO_GRUPO == "BACRIM"){
-	                    return new L.CircleMarker(latlng, {
+	                    circle = new L.CircleMarker(latlng, {
 	                        radius: 5,
 	                        color: "#9467bd",
 	                        opacity: 0.5,
 	                        fillOpacity: 0.5,
-	                        weight: 0.25
-	                    });    
+	                        weight: 0.25,
+	                        municipio: feature.properties.MUNICIPIO
+	                    });
+	                    addTooltip(circle, feature, tooltip);
+	                    return circle;     
 	                };
 					if (feature.properties.TIPO_GRUPO == "FUERZA_PUBLICA"){
-	                    return new L.CircleMarker(latlng, {
+	                    circle = new L.CircleMarker(latlng, {
 	                        radius: 5,
 	                        color: "#17becf",
 	                        opacity: 0.5,
 	                        fillOpacity: 0.5,
-	                        weight: 0.25
-	                    });    
+	                        weight: 0.25,
+	                        municipio: feature.properties.MUNICIPIO
+	                    });
+	                    addTooltip(circle, feature, tooltip);
+	                    return circle;     
 	                };
 	            },
 
@@ -223,6 +250,25 @@
 
 		// Initial loading
 		filterLayer();
+
+		function addTooltip(circleMarker, feature, tooltip){
+			circleMarker.on("mouseover", function(e){
+            	//console.log(feature.properties.MUNICIPIO);
+            	return tooltip.style("visibility", "visible")
+							.text(feature.properties.MUNICIPIO);
+	        });
+	        circleMarker.on("mousemove", function(){
+				return tooltip.style("top", (event.pageY-10)+"px")
+						.style("left",(event.pageX+10)+"px")
+						.text(feature.properties.MUNICIPIO);
+			})
+			circleMarker.on("mouseout", function(){
+				return tooltip.style("visibility", "hidden");
+			});
+			circleMarker.on("click", function(){
+				return tooltip.style("visibility", "hidden");
+			});
+		}
     </script>
 </body>
 </html>
