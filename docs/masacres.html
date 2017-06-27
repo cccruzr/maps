@@ -4,6 +4,8 @@
 <head>
 	<meta charset="UTF-8">
     <title>Cartografía del Conflicto: Masacres</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="../img/col-favicon.png"/>
     <!-- ____________ CSS Styles __________ -->
     <!-- Leaflet Style Sheet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css">
@@ -24,13 +26,40 @@
 	<!-- ##############################################  -->
     <!-- ###########    WEBPAGE ELEMENTS    ###########  -->
     <!-- ##############################################  -->
-	<h2>Cartografía del Conflicto: Masacres perpetuadas por grupos armados (1981-2013)</h2>
+	<h2>Cartografía del Conflicto: Masacres perpetuadas por grupos armados (1982-2013)</h2>
 	<!-- Map container -->
-     <div id="map"></div>
+     <div id="map">
+     	<div class="leaflet-bottom leaflet-left legend">
+			<p style="font-size: 1.2em; text-decoration: underline"><b>GRUPO ARMADO</b></p><br>
+
+			<table style="width:100%">
+				<tr>
+					<td><i style="background: #d62728"></i><p>PARAMILITARES</p></td>
+					<td><input id="inputP" class="checkbox" type="checkbox" value="inputP" checked></td>
+				</tr>
+				<tr>
+					<td><i style="background: #2ca02c"></i><p>GUERRILLA</p></td>
+					<td><input id="inputG" class="checkbox" type="checkbox" value="inputG" checked></td>
+				</tr>
+				<tr>
+					<td><i style="background: #9467bd"></i><p>BACRIM</p></td>
+					<td><input id="inputB" class="checkbox" type="checkbox" value="inputB" checked></td>
+				</tr>
+				<tr>
+					<td><i style="background: #17becf"></i><p>FUERZA PÚBLICA</p></td>
+					<td><input id="inputFP" class="checkbox" type="checkbox" value="inputFP" checked></td>
+				</tr>
+				<tr>
+					<td><i style="background: #bcbd22"></i><p>NO IDENTIFICADO</p></td>
+					<td><input id="inputNI" class="checkbox" type="checkbox" value="inputNI" checked></td>
+				</tr>
+			</table>
+     	</div>
+     </div>
 	
 	<!-- Time slider -->
 	<p>
-		<label for="amount">&nbsp;<b>Rango de años:</b></label>
+		<label for="amount">&nbsp;<b>Seleccione el periodo de tiempo:&nbsp;</b></label>
 		<input type="text" id="amount" readonly>
 	</p>
 	<div id="slider-range"></div>
@@ -59,12 +88,11 @@
     <script type="text/javascript">
         //Carto tiles attribution and URL
         var cartoLight_URL = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png';
-        //var	cartoLight_URL = 'https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiY2NjcnV6ciIsImEiOiJjajN3NTh6ZTUwMDE4MzJwODl6OW04a2poIn0.LUFTG4do1t5B5BKBsYC2UQ';
         var	RUTASLink = '<a href="http://rutasdelconflicto.com/geografia-del-terror/">Rutas del Conflicto</a>',
         	OSMLink = '<a href="http://openstreetmap.org">&copy;OpenStreetMap</a>',
         	cartoLink = '<a href="http://cartodb.com/attributions">&copy;CartoDB</a>',
-        	myLink = '<a href="http://cccruzr.github.io">Camilo Cruz</a>'
-        	cartoAttrib = myLink + ' | ' + RUTASLink + ' | ' + OSMLink + ' | ' + cartoLink;
+        	authorLink = '<a href="http://cccruzr.github.io">Camilo Cruz</a>'
+        	cartoAttrib = authorLink + ' | ' + RUTASLink + ' | ' + OSMLink + ' | ' + cartoLink;
 
         var cartoMap = L.tileLayer(cartoLight_URL, {
             attribution: cartoAttrib,
@@ -84,47 +112,28 @@
             minZoom: 5
         }).setView([4.7110, -74.0721], 6);
 
-        // Create Leaflet Control Object for Legend
-		var legend = L.control({position: 'bottomleft'});
-
-		// Function that runs when legend is added to map
-		legend.onAdd = function(map) {
-			// Create Div Element and populate it with HTML
-			var div = L.DomUtil.create('div', 'legend');		    
-			div.innerHTML += '<p style="font-size: 1.2em; text-decoration: underline"><b>GRUPO ARMADO</b></p><br>';
-			div.innerHTML += '<i style="background: #d62728"></i><p>PARAMILITARES</p>';
-			div.innerHTML += '<i style="background: #2ca02c"></i><p>GUERRILLA</p>';
-			div.innerHTML += '<i style="background: #9467bd"></i><p>BACRIM</p>';
-			div.innerHTML += '<i style="background: #17becf"></i><p>FUERZA PÚBLICA</p>';
-			div.innerHTML += '<i style="background: #bcbd22"></i><p>NO IDENTIFICADO</p>';
-			// Return the Legend div containing the HTML content
-			return div;
-		};
-		// Add Legend to Map
-		legend.addTo(map);
 
         var overlay = null; //Global overlay variable
-
+        var c = 0 // Debugging counter
         function filterLayer() {
         	if (overlay != null) {overlay.clearLayers()};
         	var masacresLayer = L.geoJson(null, {
 	            onEachFeature: function(feature, layer){
-						date = new Date('"' + feature.properties.FECHA + '"');
-						month = date.getMonth() + 1;
-						dateFormat = date.getFullYear() + "-" + month + "-" + date.getDate();
-						feature.properties.FECHA_YYMMDD = dateFormat;
-
-						layer.bindPopup(
-							'<h2>' + feature.properties.NOMBRE_MASACRE + '</h2>' +
-							'<strong>FECHA: </strong>' + feature.properties.FECHA_YYMMDD + '<br/>' +
-							'<strong>MUNICIPIO: </strong>' + feature.properties.MUNICIPIO + '<br/>' +
-							'<strong>DEPARTAMENTO: </strong>' + feature.properties.DEPARTAMENTO + '<br/>' +
-							'<strong>GRUPO ARMADO: </strong>' + feature.properties.GRUPO_ARMADO + '<br/>' +
-							'<strong>TIPO GRUPO: </strong>' + feature.properties.TIPO_GRUPO + '<br/>' +
-							'<div class="link"><a target="_blank" href="' +  feature.properties.URL + '">VER MÁS</a><div>'
-						);
-
-
+					date = new Date('"' + feature.properties.FECHA + '"');
+					month = date.getMonth() + 1;
+					dateFormat = date.getFullYear() + "-" + month + "-" + date.getDate();
+					feature.properties.FECHA_YYMMDD = dateFormat;
+					c += 1;
+					//console.log(c, feature.properties.TIPO_GRUPO, feature.properties.NOMBRE_MASACRE);
+					layer.bindPopup(
+						'<h2>' + feature.properties.NOMBRE_MASACRE + '</h2>' +
+						'<strong>FECHA: </strong>' + feature.properties.FECHA_YYMMDD + '<br/>' +
+						'<strong>MUNICIPIO: </strong>' + feature.properties.MUNICIPIO + '<br/>' +
+						'<strong>DEPARTAMENTO: </strong>' + feature.properties.DEPARTAMENTO + '<br/>' +
+						'<strong>GRUPO ARMADO: </strong>' + feature.properties.GRUPO_ARMADO + '<br/>' +
+						'<strong>TIPO GRUPO: </strong>' + feature.properties.TIPO_GRUPO + '<br/>' +
+						'<div class="link"><a target="_blank" href="' +  feature.properties.URL + '">VER MÁS</a><div>'
+					);
 				},
 
 	            pointToLayer: function(feature, latlng) { //Style the layer based on TIPO_GRUPO
@@ -149,7 +158,9 @@
 	                        weight: 0.25,
 	                    });
 	                    addTooltip(circle, feature, tooltip);
-	                    return circle;  
+	                    if (filterP == true){
+	                    	return circle;
+	                    }
 	                };
 	                if (feature.properties.TIPO_GRUPO == "GUERRILLA"){
 	                    circle = new L.CircleMarker(latlng, {
@@ -161,7 +172,9 @@
 	                        municipio: feature.properties.MUNICIPIO
 	                    });
 	                    addTooltip(circle, feature, tooltip);
-	                    return circle;    
+	                    if (filterG == true){
+	                    	return circle;
+	                    }   
 	                };
 	                if (feature.properties.TIPO_GRUPO == "NO_IDENTIFICADO"){
 	                    circle = new L.CircleMarker(latlng, {
@@ -173,7 +186,9 @@
 	                        municipio: feature.properties.MUNICIPIO
 	                    });
 	                    addTooltip(circle, feature, tooltip);
-	                    return circle;     
+	                    if (filterNI == true){
+	                    	return circle;
+	                    }
 	                };
 	                if (feature.properties.TIPO_GRUPO == "BACRIM"){
 	                    circle = new L.CircleMarker(latlng, {
@@ -185,7 +200,9 @@
 	                        municipio: feature.properties.MUNICIPIO
 	                    });
 	                    addTooltip(circle, feature, tooltip);
-	                    return circle;     
+	                    if (filterB == true){
+	                    	return circle;
+	                    }   
 	                };
 					if (feature.properties.TIPO_GRUPO == "FUERZA_PUBLICA"){
 	                    circle = new L.CircleMarker(latlng, {
@@ -197,7 +214,9 @@
 	                        municipio: feature.properties.MUNICIPIO
 	                    });
 	                    addTooltip(circle, feature, tooltip);
-	                    return circle;     
+	                    if (filterFP == true){
+	                    	return circle;
+	                    }     
 	                };
 	            },
 
@@ -214,8 +233,10 @@
 	        overlay = L.layerGroup([masacresLayer]).addTo(map);
 	    }
 
-        var rangeStart = 1994, //Global time range variables
-        	rangeEnd = 1999,
+
+	    // TIME SLIDER
+        var rangeStart = 1982, //Global time range variables
+        	rangeEnd = 2013,
         	count = 0;
 
 		$( function() {
@@ -226,9 +247,9 @@
 		    		filterLayer();
 		    	},
 		    	range: true,
-				min: 1981,
+				min: 1982,
 				max: 2013,
-				values: [ 1994, 1999 ],
+				values: [ 1982, 2013 ],
 				slide: function( event, ui ) {
 					$( "#amount" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
 				}
@@ -238,19 +259,10 @@
 		      " - " + $( "#slider-range" ).slider( "values", 1 ) );
 		 });
 
-		$( document ).ajaxComplete( function() {
-			console.log( "Triggered ajaxComplete handler." );
-			d3.selectAll(".leaflet-interactive")
-					.on("mouseover", function(){
-						console.log
-						d3.select(this).transition()
-							.style("stroke-width", 10);
-					});
-		});
-
 		// Initial loading
 		filterLayer();
 
+		// Function to add the tooltip with name of masacre
 		function addTooltip(circleMarker, feature, tooltip){
 			circleMarker.on("mouseover", function(e){
             	//console.log(feature.properties.MUNICIPIO);
@@ -269,6 +281,68 @@
 				return tooltip.style("visibility", "hidden");
 			});
 		}
+
+		// Global variables for filtering groups
+		var checkboxP = $("#inputP"),
+			filterP = true;
+		var checkboxG = $("#inputG"),
+			filterG = true;
+		var checkboxB = $("#inputB"),
+			filterB = true;
+		var checkboxFP = $("#inputFP"),
+			filterFP = true;
+		var checkboxNI = $("#inputNI"),
+			filterNI = true;
+
+		checkboxP.change(function(event) {
+		    var checkboxP = event.target;
+		    if (checkboxP.checked) {
+		        filterP = true;
+		    } else {
+		        filterP = false;
+		    }
+		    filterLayer();
+		});
+
+		checkboxG.change(function(event) {
+		    var checkboxG = event.target;
+		    if (checkboxG.checked) {
+		        filterG = true;
+		    } else {
+		        filterG = false;
+		    }
+		    filterLayer();
+		});
+
+		checkboxB.change(function(event) {
+		    var checkboxB = event.target;
+		    if (checkboxB.checked) {
+		        filterB = true;
+		    } else {
+		        filterB = false;
+		    }
+		    filterLayer();
+		});
+
+		checkboxFP.change(function(event) {
+		    var checkboxFP = event.target;
+		    if (checkboxFP.checked) {
+		        filterFP = true;
+		    } else {
+		        filterFP = false;
+		    }
+		    filterLayer();
+		});
+
+		checkboxNI.change(function(event) {
+		    var checkboxNI = event.target;
+		    if (checkboxNI.checked) {
+		        filterNI = true;
+		    } else {
+		        filterNI = false;
+		    }
+		    filterLayer();
+		});
     </script>
 </body>
 </html>
