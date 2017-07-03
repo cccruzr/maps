@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css?family=Lato');
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Lato', 'Arial', sans-serif;
+}
+
+#map {
+    font-family: 'Lato', 'Arial', sans-serif;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+
+.geocoder-control-input {
+    font-family: 'Lato', 'Arial', sans-serif;
+}
+
+#info-pane {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 400;
+    padding: 0.2em;
+    background: white;
+    font-size: 4em;
+}
+
+#info-pane2 {
+    position: absolute;
+    bottom: 25px;
+    right: 10px;
+    z-index: 400;
+    padding: 5px;
+    background: white;
+    font-size: 0.725em;
+    opacity: 0.9;
+}
+
+.fa-map-marker:before {
+    font-size: 21px;
+    line-height: 28px;
+}
+
+.leaflet-control-locate a {
+    padding: 0px;
+}
+
+p {
+    padding: 2px;
+    margin: 2px;
+}
+
+.easy-button-button {
+	font-size: 24px;
+    line-height: 34px;
+    padding: 4px 4px 4px 4px;
+}

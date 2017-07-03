@@ -10,96 +10,42 @@
     integrity="sha512-wcw6ts8Anuw10Mzh9Ytw4pylW8+NAD4ch3lqm9lzAsTxg0GFeJgoAtxuCLREZSC5lUXdVyo/7yfsqFjQ4S+aKw=="
     crossorigin=""/>
     
-    <!-- Load Esri Leaflet Geocoder style from CDN -->
-  	<link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.2.4/dist/esri-leaflet-geocoder.css"
-  	integrity="sha384-cuElYVOZCs9f5kOmEIvZWm6M0CYP8T8dbA1Bx3XnXGatEha3FV9igr7r+S+AmEBt"
-  	crossorigin="">
+    <!-- Load geocoding plugin after Leaflet -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-geocoder-mapzen/1.9.2/leaflet-geocoder-mapzen.css">
 
   	<!-- Locate Control -->
   	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 	<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.mapbox.css' rel='stylesheet' />
+	
+	<!-- Sidebar + Easy buttons style-->
+	<link rel="stylesheet" href="css/L.Control.Sidebar.css">
+	<link rel="stylesheet" href="https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.css">
 
-    <style>
-	    @import url('https://fonts.googleapis.com/css?family=Open+Sans');
-	    body {
-	        margin: 0;
-	        padding: 0;
-	        font-family: 'Open Sans', 'Arial', sans-serif;
-	    }
-	    
-	    #map {
-	        font-family: 'Open Sans', 'Arial', sans-serif;
-	        position: absolute;
-	        top: 0;
-	        bottom: 0;
-	        right: 0;
-	        left: 0;
-	    }
-
-	    .geocoder-control-input {
-	    	font-family: 'Open Sans', 'Arial', sans-serif;
-	    }
-
-	    #info-pane {
-	        position: absolute;
-	        top: 10px;
-	        right: 10px;
-	        z-index: 400;
-	        padding: 0.2em;
-	        background: white;
-	        font-size: 4em;
-	    }
-
-	    #info-pane2 {
-	        position: absolute;
-	        bottom: 25px;
-	        right: 10px;
-	        z-index: 400;
-	        padding: 5px;
-	        background: white;
-	        font-size: 0.725em;
-	        opacity: 0.9;
-	    }
-	    .fa-map-marker:before {
-		    font-size: 22px;
-		    line-height: 29px;
-		}
-
-		.leaflet-control-locate a {
-		    padding: 3px 0px 0px;
-		}
-
-		p {
-			padding: 2px;
-			margin: 2px;
-		}
-    </style>
+	<!-- Custom style-->
+	<link rel="stylesheet" href="css/custom.css">
 </head>
 
 <body>
     <div id="map"></div>
     <div id="info-pane" class="leaflet-bar"></div>
-    <div id="info-pane2">
+    <div id="sidebar">
 		<table style="width:100%">
 		    <tr>
 		        <th align="left"><p style="font-size: 1em; text-decoration: underline; vertical-align: middle">
-	    		<b>INSTRUCCIONES</b></p></th>
+	    		<h2><b>INSTRUCCIONES</b></h2></th>
 		        <th><img style="text-align: right" src="img/cp-logo.png" width="80px"></th>
 		    </tr>
 		</table>
-    	<p>&bull;&nbsp;Ubique el mouse en la localización de búsqueda<br>
-    	&nbsp;&nbsp;para conocer su código postal.<br></p>
-    	<p>&bull;&nbsp;En caso de querer buscar una ubicación, aleje<br>
-    	&nbsp;&nbsp;el mapa hasta un nivel de zoom donde sea visible<br>
-		&nbsp;&nbsp;la localización aproximada de su búsqueda.<br></p>
-    	<p>&bull;&nbsp;Click en la lupa para usar el geolocalizador:<br>
-		&nbsp;&nbsp;búsqueda por dirección o lugar de interés.<br></p>
-		<p>&bull;&nbsp;Para encontrar su localización actual haga<br>
-		&nbsp;&nbsp;click en el botón de geolocalización.</p>
-		<p style="font-size: 0.78em;">
-		<i><br>NOTA: Esta aplicación web NO es oficial. El visor oficial se puede<br>
+			<p><li>Ubique el mouse en la localización de búsqueda
+    			para conocer su código postal.</li></p>
+    		<p><li>Click en la lupa para usar el geolocalizador:
+				búsqueda por dirección o lugar de interés.</li></p>
+			<p><li>Para encontrar su localización actual haga
+				click en el botón de geolocalización.</li></p>
+		<br><br><p style="font-size: 0.85em;">
+		<i><b>NOTA:</b> Esta aplicación web NO es oficial. El visor oficial se puede
 		encontrar <a href="http://visor.codigopostal.gov.co/472/visor/" target="_blank">acá</a>.
-		</p></i>
+		</p>
     </div>
 
     <!-- Load Leaflet from CDN-->
@@ -112,21 +58,41 @@
     integrity="sha384-ze7rgny7/YGFxBlVgTBdOABNWe5V9BYjju/qwqJhCU8XJHtuEnRlbUpN5lXyY706"
     crossorigin=""></script>
 
-    <!-- Load Esri Leaflet Geocoder from CDN (Modified)-->
-	<script src="js/esri-leaflet-geocoder@2.2.4.js"></script>
+    <!-- Load geocoding plugin after Leaflet -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-geocoder-mapzen/1.9.2/leaflet-geocoder-mapzen.js"></script>
 
 	<!-- Locate Control -->
 	<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.min.js'></script>
+	
+	<!-- Control Sidebar -->
+	<script src="js/L.Control.Sidebar.js"></script>
+
+	<!-- Easy buttons -->
+	<script src="https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.js"></script>
+
 
     <script>
-    var map = L.map('map').setView([4.7, -74.1], 6);
+    //Set map bounds
+    var bounds = new L.latLngBounds(       //Map boundaries
+    	L.latLng(14, -83),     //UpperLeft 13.81674, -82.96875
+    	L.latLng(-5.5, -60)    //BottomRight -5.09094, -66.79687
+    );
 
+    //Initialize map
+    var map = L.map('map', {
+        maxBounds: bounds,
+        maxBoundsViscosity: 0.8,
+        minZoom: 6,	//Maximum zoom out
+    }).setView([4.7110, -74.0721], 6);
+
+    //Mapbox Streets Tiles
     L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v10/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiY2NjcnV6ciIsImEiOiJjajN3NTh6ZTUwMDE4MzJwODl6OW04a2poIn0.LUFTG4do1t5B5BKBsYC2UQ', {
-	    attribution: '<a href="http://cccruzr.github.io/">Camilo Cruz</a> | Datos del © <a href="http://www.codigopostal.gov.co/">Código Postal de Colombia</a> | Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors | <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a> | Imagery © <a href="http://mapbox.com">Mapbox</a>',
+	    attribution: '<a href="http://cccruzr.github.io/">Camilo Cruz</a> | Datos ©<a href="http://www.codigopostal.gov.co/">Código Postal de Colombia</a> | &copy;<a href="http://openstreetmap.org">OpenStreetMap</a> | ©<a href="http://mapbox.com">Mapbox</a>',
 	    maxZoom: 18,
 	    id: 'mapbox.streets',
 	}).addTo(map);
 
+    //Postal Codes SHP call
     var zipcodes = L.esri.featureLayer({
         //url: 'https://services3.arcgis.com/3845X4ZJand4K8Fh/arcgis/rest/services/colombia_codigo_postal_shp/FeatureServer/0',
         url: 'https://services3.arcgis.com/3845X4ZJand4K8Fh/arcgis/rest/services/Colombia_C%C3%B3digo_Postal_(Simplificada)/FeatureServer/0',
@@ -139,9 +105,41 @@
         }
     }).addTo(map);
 
-    var searchControl = L.esri.Geocoding.geosearch().addTo(map);
+    //Geolocate control
     L.control.locate().addTo(map);
 
+    //Geocoding search
+    L.control.geocoder('mapzen-6FaNpVv', {
+    	bounds: bounds,
+    	//panToPoint: true,
+    	textStrings: {
+		    INPUT_PLACEHOLDER: 'Buscar (Lugar o Dirección)',
+		    INPUT_TITLE_ATTRIBUTE: 'Buscar',
+		    RESET_TITLE_ATTRIBUTE: 'Restablecer',
+		    NO_RESULTS: 'No se encontraron resultados.',
+		    ERROR_403: 'Se necesita una "API KEY" válida para usar la búsqueda.',
+		    ERROR_404: 'No se encontró el servicio de búsqueda. :-(',
+		    ERROR_408: 'El servicio demoró en responder. Intente de nuevo en unos instantes.',
+		    ERROR_429: 'Hay muchas solicitudes en el momento. Intente de nuevo más tarde.',
+		    ERROR_500: 'El servicio de búsqueda no está funcionando en el momento. Intente de nuevo más tarde.',
+		    ERROR_502: 'Se perdió la conexión. Intente de nuevo más tarde.',
+		    ERROR_DEFAULT: 'El servicio de búsqueda presenta inconvenientes. :-('
+		  }
+    }).addTo(map);
+
+    //Menu button
+    L.easyButton( '<i class="fa fa-info-circle" aria-hidden="true"></i>', function(){
+		sidebar.toggle();
+	}).addTo(map);
+
+    //Sidebar
+    var sidebar = L.control.sidebar('sidebar', {
+        closeButton: true,
+        position: 'left'
+    });
+    map.addControl(sidebar);
+
+    // Tooltip update on mouse events
     var oldId;
 
     zipcodes.on('mouseout', function(e) {
