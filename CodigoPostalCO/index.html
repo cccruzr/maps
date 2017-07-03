@@ -1,0 +1,155 @@
+<html>
+
+<head>
+    <meta charset=utf-8 />
+    <title>Colombia: Código Postal</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    
+    <!-- Load Leaflet style from CDN-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css" 
+    integrity="sha512-wcw6ts8Anuw10Mzh9Ytw4pylW8+NAD4ch3lqm9lzAsTxg0GFeJgoAtxuCLREZSC5lUXdVyo/7yfsqFjQ4S+aKw=="
+    crossorigin=""/>
+    
+    <!-- Load Esri Leaflet Geocoder style from CDN -->
+  	<link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.2.4/dist/esri-leaflet-geocoder.css"
+  	integrity="sha384-cuElYVOZCs9f5kOmEIvZWm6M0CYP8T8dbA1Bx3XnXGatEha3FV9igr7r+S+AmEBt"
+  	crossorigin="">
+
+  	<!-- Locate Control -->
+  	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://domoritz.github.io/leaflet-locatecontrol/dist/L.Control.Locate.min.css" />	  
+
+    <style>
+	    @import url('https://fonts.googleapis.com/css?family=Open+Sans');
+	    body {
+	        margin: 0;
+	        padding: 0;
+	        font-family: 'Open Sans', 'Arial', sans-serif;
+	    }
+	    
+	    #map {
+	        font-family: 'Open Sans', 'Arial', sans-serif;
+	        position: absolute;
+	        top: 0;
+	        bottom: 0;
+	        right: 0;
+	        left: 0;
+	    }
+
+	    .geocoder-control-input {
+	    	font-family: 'Open Sans', 'Arial', sans-serif;
+	    }
+
+	    #info-pane {
+	        position: absolute;
+	        top: 10px;
+	        right: 10px;
+	        z-index: 400;
+	        padding: 0.2em;
+	        background: white;
+	        font-size: 4em;
+	    }
+
+	    #info-pane2 {
+	        position: absolute;
+	        bottom: 25px;
+	        right: 10px;
+	        z-index: 400;
+	        padding: 5px;
+	        background: white;
+	        font-size: 0.725em;
+	        opacity: 0.85;
+	    }
+	    .fa-map-marker:before {
+		    font-size: 22px;
+		    line-height: 29px;
+		}
+		p {
+			padding: 2px;
+			margin: 2px;
+		}
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <div id="info-pane" class="leaflet-bar"></div>
+    <div id="info-pane2">
+		<table style="width:100%">
+		    <tr>
+		        <th align="left"><p style="font-size: 1em; text-decoration: underline; vertical-align: middle">
+	    		<b>INSTRUCCIONES</b></p></th>
+		        <th><img style="text-align: right" src="img/cp-logo.png" width="80px"></th>
+		    </tr>
+		</table>
+    	<p>&bull;&nbsp;Ubique el mouse en la localización de búsqueda<br>
+    	&nbsp;&nbsp;para conocer su código postal.<br></p>
+    	<p>&bull;&nbsp;En caso de querer buscar una ubicación, aleje<br>
+    	&nbsp;&nbsp;el mapa hasta un nivel de zoom donde sea visible<br>
+		&nbsp;&nbsp;la localización aproximada de su búsqueda.<br></p>
+    	<p>&bull;&nbsp;Click en la lupa para usar el geolocalizador:<br>
+		&nbsp;&nbsp;búsqueda por dirección o lugar de interés.<br></p>
+		<p>&bull;&nbsp;Para encontrar su localización actual haga<br>
+		&nbsp;&nbsp;click en el ícono de geolocalización.</p>
+    </div>
+
+    <!-- Load Leaflet from CDN-->
+	<script src="https://unpkg.com/leaflet@1.1.0/dist/leaflet.js"
+	integrity="sha512-mNqn2Wg7tSToJhvHcqfzLMU6J4mkOImSPTxVZAdo+lcPlk+GhZmYgACEe0x35K7YzW1zJ7XyJV/TT1MrdXvMcA=="
+	crossorigin=""></script>
+
+  	<!-- Load Esri Leaflet from CDN -->
+    <script src="https://unpkg.com/esri-leaflet@2.0.8"
+    integrity="sha384-ze7rgny7/YGFxBlVgTBdOABNWe5V9BYjju/qwqJhCU8XJHtuEnRlbUpN5lXyY706"
+    crossorigin=""></script>
+
+    <!-- Load Esri Leaflet Geocoder from CDN (Modified)-->
+	<script src="js/esri-leaflet-geocoder@2.2.4.js"></script>
+
+	<!-- Locate Control -->
+	<script src="https://domoritz.github.io/leaflet-locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+
+    <script>
+    var map = L.map('map').setView([4.7, -74.1], 6);
+
+    L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v10/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiY2NjcnV6ciIsImEiOiJjajN3NTh6ZTUwMDE4MzJwODl6OW04a2poIn0.LUFTG4do1t5B5BKBsYC2UQ', {
+	    attribution: '<a href="http://cccruzr.github.io/">Camilo Cruz</a> | Datos del © <a href="http://www.codigopostal.gov.co/">Código Postal de Colombia</a> | Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors | <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a> | Imagery © <a href="http://mapbox.com">Mapbox</a>',
+	    maxZoom: 18,
+	    id: 'mapbox.streets',
+	}).addTo(map);
+
+    var zipcodes = L.esri.featureLayer({
+        //url: 'https://services3.arcgis.com/3845X4ZJand4K8Fh/arcgis/rest/services/colombia_codigo_postal_shp/FeatureServer/0',
+        url: 'https://services3.arcgis.com/3845X4ZJand4K8Fh/arcgis/rest/services/Colombia_C%C3%B3digo_Postal_(Simplificada)/FeatureServer/0',
+        simplifyFactor: 0.25,
+        precision: 5,
+        fields: ['FID', 'Codigo_Pos'],
+        style: {
+            color: '#A9A9A9',
+            weight: 0.5
+        }
+    }).addTo(map);
+
+    var searchControl = L.esri.Geocoding.geosearch().addTo(map);
+    L.control.locate().addTo(map);
+
+    var oldId;
+
+    zipcodes.on('mouseout', function(e) {
+        document.getElementById('info-pane').innerHTML = '';
+        zipcodes.resetFeatureStyle(oldId);
+    });
+
+    zipcodes.on('mouseover', function(e) {
+        oldId = e.layer.feature.id;
+        document.getElementById('info-pane').innerHTML = '<b>' + e.layer.feature.properties.Codigo_Pos + '</b>';
+        zipcodes.setFeatureStyle(e.layer.feature.id, {
+            color: '#9D78D2',
+            weight: 3,
+            opacity: 1
+        });
+    });
+    </script>
+</body>
+
+</html>

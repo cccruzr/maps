@@ -89,3 +89,9 @@ td {
   vertical-align: middle;
   line-height: 16px;
 }
+
+#attribution {
+	position: fixed;
+    bottom: 0;
+    right: -100px;
+}
