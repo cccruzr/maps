@@ -58,3 +58,23 @@ p {
     line-height: 34px;
     padding: 4px 4px 4px 4px;
 }
+
+#close {
+	padding: 0px;
+	position: absolute;
+	top: 0px;
+	right: 5px;
+}
+
+#close:hover {
+
+    /*display:inline-block;
+    /*padding:2px 5px;
+    /*background:#ccc;*/
+    color: #3C3C3C;
+}
+
+#sidebar {
+	position: relative;
+	padding: 10px 20px 10px 20px;
+}

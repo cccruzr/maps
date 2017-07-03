@@ -29,6 +29,7 @@
     <div id="map"></div>
     <div id="info-pane" class="leaflet-bar"></div>
     <div id="sidebar">
+	    <span id='close' onclick='sidebar.hide();' style="font-size: 2em"><b>&times;</b></span>
 		<table style="width:100%">
 		    <tr>
 		        <th align="left"><p style="font-size: 1em; text-decoration: underline; vertical-align: middle">
@@ -134,7 +135,7 @@
 
     //Sidebar
     var sidebar = L.control.sidebar('sidebar', {
-        closeButton: true,
+        closeButton: false,
         position: 'left'
     });
     map.addControl(sidebar);
