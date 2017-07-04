@@ -64,6 +64,7 @@ p {
 	position: absolute;
 	top: 0px;
 	right: 5px;
+	color: rgba(60, 60, 60, 0.60);
 }
 
 #close:hover {
@@ -71,7 +72,7 @@ p {
     /*display:inline-block;
     /*padding:2px 5px;
     /*background:#ccc;*/
-    color: #3C3C3C;
+    color: #000000;
 }
 
 #sidebar {
