@@ -245,13 +245,12 @@
 
     // Tooltip update on mouse events
     var oldId;
+    zipcodes.on('mousemove', function(e){showPC(e)});
+    zipcodes.on('mouseout', function(e){hidePC(e)});
 
-    zipcodes.on('mouseout', function(e) {
-        document.getElementById('info-pane').innerHTML = '';
-        zipcodes.resetFeatureStyle(oldId);
-    });
-
-    zipcodes.on('mouseover', function(e) {
+    
+    //Show Postal Code
+    function showPC(e){
         oldId = e.layer.feature.id;
         document.getElementById('info-pane').innerHTML = '<b>' + e.layer.feature.properties.Codigo_Pos + '</b>';
         zipcodes.setFeatureStyle(e.layer.feature.id, {
@@ -259,7 +258,13 @@
             weight: 3,
             opacity: 1
         });
-    });
+    }
+    
+    // Hide Postal Code
+    function hidePC(e){
+        document.getElementById('info-pane').innerHTML = '';
+        zipcodes.resetFeatureStyle(oldId);
+    }
     </script>
 
 </body>
