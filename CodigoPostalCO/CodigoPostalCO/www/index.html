@@ -245,7 +245,8 @@
 
     // Tooltip update on mouse events
     var oldId;
-    zipcodes.on('mousemove', function(e){showPC(e)});
+    zipcodes.on('mouseover', function(e){showPC(e)});
+    zipcodes.on('click', function(e){showPC(e)});
     zipcodes.on('mouseout', function(e){hidePC(e)});
 
     
