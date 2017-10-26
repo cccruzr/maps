@@ -20,9 +20,9 @@ body {
 
 #info-pane {
     position: absolute;
-    top: 10px;
+    bottom: 30px;
     right: 10px;
-    z-index: 400;
+    z-index: 4000;
     padding: 0px 10px 0px 10px;
     background: white;
     font-size: 6vw;
@@ -32,17 +32,6 @@ body {
   #info-pane {
      font-size: 4em;
   }*/
-}
-
-#info-pane2 {
-    position: absolute;
-    bottom: 25px;
-    right: 10px;
-    z-index: 400;
-    padding: 5px;
-    background: white;
-    font-size: 0.725em;
-    opacity: 0.9;
 }
 
 .fa-map-marker:before {
@@ -60,17 +49,17 @@ p {
 }
 
 .easy-button-button {
-	font-size: 20px;
+  font-size: 20px;
     line-height: 20px;
     padding: 0px;
 }
 
 #close {
-	padding: 0px;
-	position: absolute;
-	top: 0px;
-	right: 5px;
-	color: rgba(60, 60, 60, 0.60);
+  padding: 0px;
+  position: absolute;
+  top: 0px;
+  right: 5px;
+  color: rgba(60, 60, 60, 0.60);
     cursor: default;
 }
 
@@ -83,8 +72,8 @@ p {
 }
 
 #sidebar {
-	position: relative;
-	padding: 10px 20px 10px 20px;
+  position: relative;
+  padding: 10px 20px 10px 20px;
 }
 
 #tooltip-default {
@@ -93,4 +82,14 @@ p {
 
 #texto-instr {
     padding-left: 10px;
+}
+
+#texto-instr li {
+  margin-bottom: 3px;
+  font-size: 0.85em;
+}
+
+.well {
+  margin: 5px;
+  padding: 5px;
 }

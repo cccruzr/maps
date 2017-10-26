@@ -1,274 +1,177 @@
 <!DOCTYPE html>
 <html>
-<!--
-  * Please see the included README.md file for license terms and conditions.
-  -->
 <head>
-    <meta charset=utf-8 />
-    <title>Colombia: Código Postal</title>
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+  <meta charset="UTF-8">
+  <title>Código Postal: Colombia</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- ################### 3rd Party JS and CSS ################### -->
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-    <!-- see http://webdesign.tutsplus.com/tutorials/htmlcss-tutorials/quick-tip-dont-forget-the-viewport-meta-tag -->
-    <!-- <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1"> -->
-    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=no">
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes, minimum-scale=1, maximum-scale=2"> -->
-    <style>
-        /* following two viewport lines are equivalent to meta viewport statement above, and is needed for Windows */
-        /* see http://www.quirksmode.org/blog/archives/2014/05/html5_dev_conf.html and http://dev.w3.org/csswg/css-device-adapt/ */
-        @-ms-viewport { width: 100vw ; min-zoom: 100% ; zoom: 100% ; }          @viewport { width: 100vw ; min-zoom: 100% zoom: 100% ; }
-        @-ms-viewport { user-zoom: fixed ; min-zoom: 100% ; }                   @viewport { user-zoom: fixed ; min-zoom: 100% ; }
-        /*@-ms-viewport { user-zoom: zoom ; min-zoom: 100% ; max-zoom: 200% ; }   @viewport { user-zoom: zoom ; min-zoom: 100% ; max-zoom: 200% ; }*/
-    </style>
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-    <!-- Uncomment the following scripts if you convert your "Standard HTML5" project into a "Cordova" project. -->
-    <!-- <script src="cordova.js"></script> -->          <!-- phantom library, needed for Cordova api calls, added during build -->
-    <!-- <script src="js/app.js"></script> -->           <!-- recommended location of your JavaScript code relative to other JS files -->
-    <!-- <script src="xdk/init-dev.js"></script> -->     <!-- normalizes device and document ready events, see README for details -->
-    <!-- Load Leaflet style from CDN-->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css" 
-    integrity="sha512-wcw6ts8Anuw10Mzh9Ytw4pylW8+NAD4ch3lqm9lzAsTxg0GFeJgoAtxuCLREZSC5lUXdVyo/7yfsqFjQ4S+aKw=="
-    crossorigin=""/>
-    
-    <!-- Load Mapzen geocoding CSS after Leaflet 
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-geocoder-mapzen/1.9.2/leaflet-geocoder-mapzen.css"> -->
+  <!-- jQuery UI -->
+  <!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/blitzer/jquery-ui.css">
+  <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
+    integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="
+    crossorigin="anonymous"></script> -->
 
-	<!-- Load Esri Leaflet Geocoder CSS -->
-  	<link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.2.4/dist/esri-leaflet-geocoder.css"
-    integrity="sha384-cuElYVOZCs9f5kOmEIvZWm6M0CYP8T8dbA1Bx3XnXGatEha3FV9igr7r+S+AmEBt"
-    crossorigin="">
+  <!-- Font Awesome -->
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
-  	<!-- Locate Control -->
-  	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-	<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.mapbox.css' rel='stylesheet' />
-	
-	<!-- Sidebar + Easy buttons style-->
-	<link rel="stylesheet" href="css/L.Control.Sidebar.css">
-	<link rel="stylesheet" href="https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.css">
-    
-    <!-- Bootstrap Latest compiled and minified CSS --
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin=""></script>
 
-	<!-- Custom style-->
-	<link rel="stylesheet" href="css/custom.css">
-    
+  <!-- Leaflet Plugins -->
+  <!-- Esri Leaflet -->
+  <script src="https://unpkg.com/esri-leaflet@2.0.8" integrity="sha384-ze7rgny7/YGFxBlVgTBdOABNWe5V9BYjju/qwqJhCU8XJHtuEnRlbUpN5lXyY706" crossorigin=""></script>
+  <!-- Sidebar v1 -->
+  <script type="text/javascript" src="js/sidebar/L.Control.Sidebar.js"></script>
+  <link rel="stylesheet" type="text/css" href="js/sidebar/L.Control.Sidebar.css">
+  <!-- Mapzen Geocoder -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-geocoder-mapzen/1.9.4/leaflet-geocoder-mapzen.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-geocoder-mapzen/1.9.4/leaflet-geocoder-mapzen.js"></script>
+  
+  <!-- Easy Buttons -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.css">
+  <script src="https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.js"></script>
+  
+  <!-- Leaflet Hash -->
+  <script type="text/javascript" src="js/hash/leaflet-hash.js"></script>
+  
+  <!-- Leaflet Geo Locate Control -->
+  <script src='js/locate-control/L.Control.Locate.min.js'></script>
+  <link href='js/locate-control/L.Control.Locate.min.css' rel='stylesheet' />
+  
+  <!-- Leaflet Omnivore -->
+  <!-- <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.3.1/leaflet-omnivore.min.js'></script> -->
+  
+  <!-- Leaflet EasyPrint -->
+  <!-- <script src='js/easy-print/leaflet-easy-print-bundle.js'></script> -->
+  
+  <!-- jquery-csv -->
+  <!-- <script src="js/jquery-csv/jquery.csv.min.js"></script> -->
+  <!-- Leaflet heatmap -->
+  <!-- <script src="js/leaflet-heat/leaflet-heat.js"></script> -->
+
+  <!-- Load animation tweening lib requirement for CanvasFlowMapLayer -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/16.6.0/Tween.min.js"></script> -->
+
+  <!-- CanvasFlowMapLayer library -->
+  <!-- <script src="js/canvasflowmap/CanvasFlowmapLayer.js"></script> -->
+
+  <!-- Papa CSV parsing libary just for this demo  -->
+  <!-- <script src="https://unpkg.com/papaparse@4.3.5/papaparse.min.js"></script> -->
+  <!-- D3.js -->
+  <!-- <script src="https://d3js.org/d3.v3.min.js"></script> -->
+  
+  <!-- ################### Custom CSS File ################### -->
+  <link rel="stylesheet" type="text/css" href="css/template-custom-style.css">
+  <link rel="stylesheet" type="text/css" href="css/map-custom-style.css">
 </head>
-
+  
 <body>
+  <div id="info-pane" class="leaflet-bar"></div>
+  <div class="blank" style="display: none;"></div>
 
-    <div id="map"></div>
-    <div id="info-pane" class="leaflet-bar"></div>
-    <div id="sidebar">
-	    <span id='close' onclick='sidebar.hide();' style="font-size: 2em"><b>&times;</b></span>
-		<table style="width:100%">
-		    <tr>
-		        <th align="left"><p style="font-size: 1em; text-decoration: underline; vertical-align: middle">
-	    		<h2><b>INSTRUCCIONES</b></h2></th>
-		        <th><img style="text-align: right" src="img/cp-logo.png" width="80px"></th>
-		    </tr>
-		</table>
-        <div id="texto-instr">
-            <p><li>Utilice el buscador para encontrar la ubicación deseada o haga zoom manualmente hasta el nivel necesario para que se carguen los datos del código postal.</li></p>
-        
-            <p><li>Ubique el mouse en la localización aproximada de su búsqueda para conocer su código postal. En móviles debe tocar la zona.</li></p>
-        
-            <p><li>Click en la lupa para usar el geolocalizador:
-            búsqueda por dirección o lugar de interés.</li></p>
-        
-            <p><li>Sea específico con su búsqueda.</li></p>
-        
-            <p><li>Ejemplo de búsqueda (Lugar/Dirección + Ciudad): 
-            <br><br>&emsp;&emsp;<span style='font-family: "Lucida Console", Monaco, monospace'>
-                Biblioteca Virgilio Barco Bogotá<span></li></p>
-        
-                <p><li>Para encontrar su localización actual haga
-            click en el botón de geolocalización.</li></p>
-		
-                <br><p style="font-size: 0.85em;">
-		
-                <i><b>NOTA:</b> Esta aplicación web NO es oficial. El visor oficial se puede encontrar <a href="http://visor.codigopostal.gov.co/472/visor/" target="_blank">acá</a>.</p>
+    <!-- Modal: Map Info -->
+    <div id="infomodal" class="modal fade"  role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h3 class="modal-title">Información</h3>
+          </div>
+
+          <div class="modal-body">
+            <p>Aplicación web alternativa al <a href="http://visor.codigopostal.gov.co/472/visor/" target="_blank">visor oficial</a>, con el fin de hacer más práctica y eficiente la búsqueda del nuevo Código Postal en Colombia.</p><p>Compatible con navegadores móviles.</p>
+            <p>Se recomienda tener una versión actualizada de su navegador de preferencia en su dispositivo.</p>
+            <br>
+            <p>Datos oficiales del <a href="http://codigopostal.gov.co" target="_blank">&copy;Código Postal de Colombia</a></p>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
+      </div>
+    </div>
+  </div> <!-- /close modal -->
+
+  <div id="map"></div> <!-- Map container -->
+
+  <div id="sidebar">
+    <!-- Map description elements -->
+    <img style="text-align: right" src="img/cp-logo.png" width="120px">
+    <!-- <div id="mapTitle"><h2>Código Postal de Colombia</h2></div> -->
+    <div id="mapSubtitle"><h6><b>Aplicación web para la consulta del código postal en Colombia.</b></h6></div><hr />
+    
+    <!-- Map legend elements -->
+    <div id="mapLegend" class="row well">
+      <div id="texto-instr">
+        <h4><strong>INSTRUCCIONES DE USO</strong></h4>
+        <li>Utilice el buscador para encontrar la ubicación deseada o haga zoom manualmente hasta el nivel necesario para que se carguen los datos del código postal.</li>
+            
+        <li>Ubique el mouse en la localización aproximada de su búsqueda para conocer su código postal. En móviles debe tocar la zona.</li>
+    
+        <li>Haga click o toque la lupa para usar el geolocalizador:
+        búsqueda por dirección o lugar de interés.</li>
+    
+        <li>Sea específico con su búsqueda.</li>
+    
+        <!-- <p><li>Ejemplo de búsqueda (Lugar/Dirección + Ciudad): 
+        <br><br>&emsp;&emsp;<span style='font-family: "Lucida Console", Monaco, monospace'>
+            Biblioteca Virgilio Barco Bogotá<span></li></p> -->
+    
+        <li>Para encontrar su localización actual haga
+        click en el botón de geolocalización. <i class="fa fa-map-marker" aria-hidden="true"></i> <i></i></li></p>
+      </div>
+    </div>  
+    <hr/>
+
+    <!-- Show / Hide Tools Buttons -->
+    <button id="showTools" type="button" class="btn btn-default btn-xs btn-block">Mostrar leyenda de las herramientas</button>
+    <button id="hideTools" type="button" class="btn btn-default btn-xs btn-block" style="display:none;">Ocultar leyenda de las herramientas</button>
+
+    <!-- Tools Legend -->
+    <div class="toolLegend" style="display:none;"> <hr />
+      <div class="list-group" style="text-align:left;">
+        <li class="list-group-item"><i class="fa fa-bars fa-fw fa-lg"></i>&ensp;Mostrar barra lateral</li>
+        
+        <li class="list-group-item"><i class="fa fa-caret-left fa-fw fa-lg" aria-hidden="true"></i>&ensp;Ocultar barra lateral</li>
+        
+        <li class="list-group-item"><i class="fa fa-arrows-alt fa-fw fa-lg" aria-hidden="true"></i>&ensp;Mostrar pantalla completa</li>
+        
+        <li class="list-group-item"><i class="fa fa-globe fa-fw fa-lg" aria-hidden="true"></i>&ensp;Vista predeterminada del mapa</li>
+        
+        <li class="list-group-item"><i class="fa fa-map-marker fa-fw fa-lg" aria-hidden="true"></i>&ensp;Mostrar su ubicación actual (Geolocalizar)</li>
+        
+        <li class="list-group-item"><i class="fa fa-search fa-fw fa-lg" aria-hidden="true"></i>&ensp;Búsqueda de lugar o dirección (Geocoder por &copy;Mapzen)</li>
+        
+        <li class="list-group-item"><img src="css/img/layers-bl.png" style="margin-left: 1px; padding:0 1px;width:18px;">&ensp;Cambiar el mapa base</li>
+      </div>
     </div>
 
-    <!-- Load Leaflet from CDN-->
-	<script src="https://unpkg.com/leaflet@1.1.0/dist/leaflet.js"
-	integrity="sha512-mNqn2Wg7tSToJhvHcqfzLMU6J4mkOImSPTxVZAdo+lcPlk+GhZmYgACEe0x35K7YzW1zJ7XyJV/TT1MrdXvMcA=="
-	crossorigin=""></script>
-
-  	<!-- Load Esri Leaflet from CDN -->
-    <script src="https://unpkg.com/esri-leaflet@2.0.8"
-    integrity="sha384-ze7rgny7/YGFxBlVgTBdOABNWe5V9BYjju/qwqJhCU8XJHtuEnRlbUpN5lXyY706"
-    crossorigin=""></script>
-
-    <!-- Load Mapzen geocoding after Leaflet
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-geocoder-mapzen/1.9.2/leaflet-geocoder-mapzen.js"></script> -->
-
-	<!-- Load Esri Leaflet Geocoder JS from CDN -->
-  	<script src="https://unpkg.com/esri-leaflet-geocoder@2.2.4"
-    integrity="sha384-WpOm6fpjH3TUoBE8JthsuXv2+PcXwi3fOwhg6zzbaiu5eshSRP+mEESWp8IPSkvK"
-    crossorigin=""></script>
-
-	<!-- Locate Control -->
-	<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.min.js'></script>
-	
-	<!-- Control Sidebar -->
-	<script src="js/L.Control.Sidebar.js"></script>
-
-	<!-- Easy buttons -->
-	<script src="https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.js"></script>
     
-    <!-- jQuery --
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-                
-    <!-- Bootstrap Latest compiled and minified JavaScript --
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> -->
-                
+    <!-- Sidebar footer -->
+    <div id="mapNote"><hr />
+      <div id="sidebarFooter">
+        <a href="http://cccruzr.github.io" target="blank" class="btn btn-xs"><i class="fa fa-user"></i> Camilo Cruz</a>|<a id="infoanchor" class="btn btn-xs"><i class="fa fa-info-circle"></i> Info</a>|<a id="feedback" class="btn btn-xs" href="https://goo.gl/forms/9szqrfn0Pj8USXst2" target="blank"><i class="fa fa-comment-o"></i> Feedback</a>
+      </div>
+      <span class="small text-muted">Actualizado: 26/10/2017</span>
+    </div> <!-- /close mapNote -->    
+  </div> <!-- /close sidebar -->
 
-    <script>
-    //Set map bounds
-    var mapbounds = new L.latLngBounds(   //Map boundaries
-    	L.latLng(14, -83),     //UpperLeft 13.81674, -82.96875
-    	L.latLng(-5.5, -60)    //BottomRight -5.09094, -66.79687
-    );
 
-    var searchbounds = new L.latLngBounds(  //Map boundaries
-    	L.latLng(13.1, -82.2),   //UpperLeft 13.02597, -82.26562
-    	L.latLng(-4.60, -66.3)    //BottomRight -4.78447, -66.5332
-    );
-
-    //Initialize map
-    var map = L.map('map', {
-        maxBounds: mapbounds,
-        maxBoundsViscosity: 0.8,
-        minZoom: 6,	//Maximum zoom out
-    }).setView([4.7110, -74.0721], 7);
-
-    //Mapbox Streets Tiles
-    L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v10/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiY2NjcnV6ciIsImEiOiJjajN3NTh6ZTUwMDE4MzJwODl6OW04a2poIn0.LUFTG4do1t5B5BKBsYC2UQ', {
-	    attribution: '<a href="http://cccruzr.github.io/">Camilo Cruz</a> | Datos ©<a href="http://www.codigopostal.gov.co/">Código Postal de Colombia</a> | &copy;<a href="http://openstreetmap.org">OpenStreetMap</a> | ©<a href="http://mapbox.com">Mapbox</a>',
-	    maxZoom: 18,
-	    id: 'mapbox.streets',
-	}).addTo(map);
-
-    //Postal Codes SHP call
-    var zipcodes = L.esri.featureLayer({
-        //url: 'https://services3.arcgis.com/3845X4ZJand4K8Fh/arcgis/rest/services/colombia_codigo_postal_shp/FeatureServer/0',
-        url: 'https://services3.arcgis.com/3845X4ZJand4K8Fh/arcgis/rest/services/Colombia_C%C3%B3digo_Postal_(Simplificada)/FeatureServer/0',
-        simplifyFactor: 0.25,
-        precision: 4,
-        fields: ['FID', 'Codigo_Pos'],
-        style: {
-            color: '#A9A9A9',
-            weight: 0.5
-        }
-    });
-
-    //Sidebar
-    var sidebar = L.control.sidebar('sidebar', {
-        closeButton: false,
-        position: 'left'
-    });
-    map.addControl(sidebar);
-
-    //Menu button
-    L.easyButton( {
-        states:[{
-            icon: 'fa-question-circle',
-            title: 'Ayuda - Instrucciones',
-            onClick: function(){sidebar.toggle()},
-        }]
-        
-        /*'<i title="Ayuda" class="fa fa-question-circle" aria-hidden="true"></i>', function(){
-		sidebar.toggle();*/
-	}).addTo(map);
-
-    //Geolocate control
-    L.control.locate({
-    	icon: "fa fa-crosshairs",
-    	strings: {
-    		title: 'Localizar',
-    	}
-    }).addTo(map);
-
-    /*Geocoding search Mapzen
-    L.control.geocoder('mapzen-6FaNpVv', {
-    	bounds: bounds,
-    	//panToPoint: true,
-    	textStrings: {
-		    INPUT_PLACEHOLDER: 'Buscar (Lugar o Dirección)',
-		    INPUT_TITLE_ATTRIBUTE: 'Buscar',
-		    RESET_TITLE_ATTRIBUTE: 'Restablecer',
-		    NO_RESULTS: 'No se encontraron resultados.',
-		    ERROR_403: 'Se necesita una "API KEY" válida para usar la búsqueda.',
-		    ERROR_404: 'No se encontró el servicio de búsqueda. :-(',
-		    ERROR_408: 'El servicio demoró en responder. Intente de nuevo en unos instantes.',
-		    ERROR_429: 'Hay muchas solicitudes en el momento. Intente de nuevo más tarde.',
-		    ERROR_500: 'El servicio de búsqueda no está funcionando en el momento. Intente de nuevo más tarde.',
-		    ERROR_502: 'Se perdió la conexión. Intente de nuevo más tarde.',
-		    ERROR_DEFAULT: 'El servicio de búsqueda presenta inconvenientes. :-('
-		  }
-    }).addTo(map); */
-
-    //ESRI Geocoder
-    //Provider: limited to Colombia
-    var arcgisOnlineColombia = L.esri.Geocoding.arcgisOnlineProvider({
-    	sourceCountry: 'CO',
-    });
-	var searchControl = L.esri.Geocoding.geosearch({
-		title: 'Búsqueda',
-		placeholder: 'Buscar (Lugar o Dirección)', 
-		providers: arcgisOnlineColombia,
-		useMapBounds: false,
-		searchBounds: searchbounds
-	}).addTo(map);
-	var results = L.layerGroup().addTo(map);
-	searchControl.on('results', function(data){
-	    //console.log(results);
-	    results.clearLayers();
-	    for (var i = data.results.length - 1; i >= 0; i--) {
-	    	//console.log(data.results[i])
-	    	results.addLayer(L.marker(data.results[i].latlng).bindPopup(data.results[i].properties.LongLabel));
-		}
-	});
-        
-    //Map zoom events
-    map.on("zoomend", function(e){
-      	console.log("Zoom level: ", map.getZoom());
-	if(map.getZoom() >= 12){ //Level 6 is the treshold 
-          zipcodes.addTo(map);
-        }else{
-            map.removeLayer(zipcodes);
-            document.getElementById('info-pane').innerHTML = '';
-            zipcodes.resetFeatureStyle(oldId);
-        }
-    });
-
-    // Tooltip update on mouse events
-    var oldId;
-    zipcodes.on('mouseover', function(e){showPC(e)});
-    zipcodes.on('click', function(e){
-        hidePC(e);
-        showPC(e);
-    });
-    zipcodes.on('mouseout', function(e){hidePC(e)});
-
-    
-    //Show Postal Code
-    function showPC(e){
-        oldId = e.layer.feature.id;
-        document.getElementById('info-pane').innerHTML = '<b>' + e.layer.feature.properties.Codigo_Pos + '</b>';
-        zipcodes.setFeatureStyle(e.layer.feature.id, {
-            color: '#9D78D2',
-            weight: 3,
-            opacity: 1
-        });
-    }
-    
-    // Hide Postal Code
-    function hidePC(e){
-        document.getElementById('info-pane').innerHTML = '';
-        zipcodes.resetFeatureStyle(oldId);
-    }
-    </script>
-
+  <!-- ################### JavaScript external scripts ################### -->
+  <!-- Modify HTML Layout Elements -->
+  <script type="text/javascript" src="js/html-elements.js"></script>
+  <!-- Map elements -->
+  <script type="text/javascript" src="js/map-elements.js"></script>
 </body>
+
 </html>

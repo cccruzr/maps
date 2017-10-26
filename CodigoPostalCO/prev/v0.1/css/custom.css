@@ -20,7 +20,7 @@ body {
 
 #info-pane {
     position: absolute;
-    top: 10px;
+    bottom: 10px;
     right: 10px;
     z-index: 400;
     padding: 0px 10px 0px 10px;
@@ -32,17 +32,6 @@ body {
   #info-pane {
      font-size: 4em;
   }*/
-}
-
-#info-pane2 {
-    position: absolute;
-    bottom: 25px;
-    right: 10px;
-    z-index: 400;
-    padding: 5px;
-    background: white;
-    font-size: 0.725em;
-    opacity: 0.9;
 }
 
 .fa-map-marker:before {
