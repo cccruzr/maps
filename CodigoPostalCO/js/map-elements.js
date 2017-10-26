@@ -52,10 +52,10 @@ var carto_dark = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net
 });
 
 var basemaps = {
-  "<div class='layers-control-img'><img src='css/img/map-thumbnails/osm-street.png'></div> Streets": osm_street,
+  "<div class='layers-control-img'><img src='css/img/map-thumbnails/osm-street.png'></div> OpenStreetMap": osm_street,
   "<div class='layers-control-img'><img src='css/img/map-thumbnails/esri-sat.png'></div> Satellite": esri_satellite,
-  "<div class='layers-control-img'><img src='css/img/map-thumbnails/esri-topo.png'></div> Topography": esri_topo,
-  "<div class='layers-control-img'><img src='css/img/map-thumbnails/thunder-transit.png'></div> Transit": tf_transport,
+  "<div class='layers-control-img'><img src='css/img/map-thumbnails/esri-topo.png'></div> Topográfico": esri_topo,
+  "<div class='layers-control-img'><img src='css/img/map-thumbnails/thunder-transit.png'></div> Tránsito": tf_transport,
   "<div class='layers-control-img'><img src='css/img/map-thumbnails/carto-light.png'></div> Grayscale": carto_light,
   "<div class='layers-control-img'><img src='css/img/map-thumbnails/carto-dark.png'></div> Dark Matter": carto_dark,
 };
