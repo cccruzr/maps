@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:900,900i');
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700');
 
-@import "_global.css";
-@import "_sidebar.css";
-@import "_map.css";
-@import "_legend.css";
-@import "_popup.css";
-@import "_tooltip.css";
+@import "global.css";
+@import "sidebar.css";
+@import "map.css";
+@import "legend.css";
+@import "popup.css";
+@import "tooltip.css";
