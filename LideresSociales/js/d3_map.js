@@ -91,8 +91,8 @@ function drawMap(){
             });
         },
     });
-
-    var myLayer = omnivore.csv('../data/data.csv', null, lideresLayer);
+    
+    var myLayer = omnivore.csv('../data/data_lideres.csv', null, lideresLayer);
     overlay = L.layerGroup([lideresLayer]).addTo(map);
 }
 
